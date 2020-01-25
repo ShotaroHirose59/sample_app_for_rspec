@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe '掲示板', type: :system do
   let(:user) { create(:user) }
-  let(:other_user) {create(:user)}
+  let(:other_user) { create(:user) }
   let(:task) { create(:task, user: user) }
 
   describe '掲示板のCRUD' do
