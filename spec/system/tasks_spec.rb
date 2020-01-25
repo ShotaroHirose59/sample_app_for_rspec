@@ -6,8 +6,6 @@ RSpec.describe '掲示板', type: :system do
   let(:task) { create(:task, user: user) }
 
   describe '掲示板のCRUD' do
-    let(:task_name) { '新規作成のテストを書く' }
-
     describe '掲示板の作成' do
       context 'ログインしていない場合' do
         it 'ログインページにリダイレクトされること' do
@@ -16,18 +14,16 @@ RSpec.describe '掲示板', type: :system do
           expect(page).to have_content 'Login required'
         end
       end
-  
       context 'ログインしている場合' do
         before do
           login(user)
-          visit new_task_path
-          fill_in 'Title', with: task_name
-          click_button 'Create Task'
         end
-        it '掲示板が作成できること' do
-          expect(current_path).to eq task_path(1)
+        fit '掲示板が作成できること' do
+          visit new_task_path
+          fill_in 'Title', with: '新規作成のテスト'
+          click_button 'Create Task'
           expect(page).to have_content 'Task was successfully created.'
-          expect(page).to have_content '新規作成のテストを書く'
+          expect(page).to have_content '新規作成のテスト'
         end
       end
     end
