@@ -18,7 +18,7 @@ RSpec.describe '掲示板', type: :system do
         before do
           login(user)
         end
-        fit '掲示板が作成できること' do
+        it '掲示板が作成できること' do
           visit new_task_path
           fill_in 'Title', with: '新規作成のテスト'
           click_button 'Create Task'
@@ -41,11 +41,11 @@ RSpec.describe '掲示板', type: :system do
         context '自分の掲示板' do
           before do
             login(user)
+          end
+          it '掲示板が更新できること' do
             visit edit_task_path(task)
             fill_in 'Title', with: 'タスクを編集'
             click_button 'Update Task'
-          end
-          it '掲示板が更新できること' do
             expect(current_path).to eq task_path(task)
             expect(page).to have_content 'Task was successfully updated.'
             expect(page).to have_content 'タスクを編集'
@@ -55,9 +55,9 @@ RSpec.describe '掲示板', type: :system do
       context '他ユーザーのタスクの編集ページにアクセス' do
         before do
           login(other_user)
-          visit edit_task_path(task)
         end
         it 'アクセスが失敗する' do
+          visit edit_task_path(task)
           expect(current_path).to eq root_path
           expect(page).to have_content 'Forbidden access.'
         end
@@ -71,10 +71,10 @@ RSpec.describe '掲示板', type: :system do
       context '自分の掲示板' do
         before do
           login(user)
-          visit tasks_path
-          accept_confirm { click_link 'Destroy' }
         end
         it '掲示板が削除できること' do
+          visit tasks_path
+          accept_confirm { click_link 'Destroy' }
           expect(current_path).to eq tasks_path
           expect(page).to have_content 'Task was successfully destroyed.'
           # タスクのタイトルが表示されていないのを確認
