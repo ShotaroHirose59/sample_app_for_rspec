@@ -24,9 +24,11 @@ RSpec.describe 'UserSession', type: :system do
   end
   describe 'ログイン後' do
     context 'ログアウトボタンをクリック' do
-      it 'ログアウト処理が成功する' do
+      fit 'ログアウト処理が成功する' do
         login(user)
-        logout
+        # 先にvisitで遷移先を指定した方がリンクがないページで落ちることがない
+        visit tasks_path
+        click_link 'Logout'
         expect(current_path).to eq root_path
         expect(page).to have_content 'Logged out'
       end

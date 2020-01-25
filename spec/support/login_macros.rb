@@ -5,8 +5,4 @@ module LoginMacros
     fill_in 'Password', with: 'password'
     click_button 'Login'
   end
-
-  def logout
-    click_link 'Logout'
-  end
 end
